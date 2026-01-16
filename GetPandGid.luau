@@ -129,12 +129,12 @@ CopyPositionButton.MouseButton1Click:Connect(function()
 end)
 
 CopyGameIDButton.MouseButton1Click:Connect(function()
-    local placeId = tostring(game.PlaceId)
-    if placeId == "0" then
+    local gameId = tostring(game.GameId)
+    if gameId == "0" then
         ShowNotification("无法获取游戏ID！", false)
         return
     end
-    setclipboard(placeId)
+    setclipboard(gameId)
     ShowNotification("游戏ID已复制！", true)
 end)
 
