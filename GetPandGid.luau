@@ -38,6 +38,18 @@ local ControlCorner = Instance.new("UICorner")
 ControlCorner.CornerRadius = UDim.new(0, 10)
 ControlCorner.Parent = ControlFrame
 
+local TitleLabel = Instance.new("TextLabel")
+TitleLabel.Size = UDim2.new(1, -60, 1, 0)
+TitleLabel.Position = UDim2.new(0, 0, 0, 0)
+TitleLabel.BackgroundTransparency = 1
+TitleLabel.Text = "辅助工具v1.0 Made By ThxTure"
+TitleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+TitleLabel.TextSize = 12
+TitleLabel.Font = Enum.Font.SourceSansBold
+TitleLabel.TextXAlignment = Enum.TextXAlignment.Left
+TitleLabel.TextYAlignment = Enum.TextYAlignment.Center
+TitleLabel.Parent = ControlFrame
+
 local CloseButton = Instance.new("TextButton")
 CloseButton.Name = "CloseButton"
 CloseButton.Size = UDim2.new(0, 30, 0, 30)
@@ -61,94 +73,94 @@ MinimizeButton.Font = Enum.Font.SourceSansBold
 MinimizeButton.Parent = ControlFrame
 
 local function CreateCopyButton(text, position, parent)
-	local Button = Instance.new("TextButton")
-	Button.Name = "Copy" .. text
-	Button.Size = UDim2.new(0.9, 0, 0, 45)
-	Button.Position = position
-	Button.BackgroundColor3 = Color3.fromRGB(60, 120, 216)
-	Button.BorderSizePixel = 0
-	Button.Parent = parent
+    local Button = Instance.new("TextButton")
+    Button.Name = "Copy" .. text
+    Button.Size = UDim2.new(0.9, 0, 0, 45)
+    Button.Position = position
+    Button.BackgroundColor3 = Color3.fromRGB(60, 120, 216)
+    Button.BorderSizePixel = 0
+    Button.Parent = parent
 
-	local ButtonCorner = Instance.new("UICorner")
-	ButtonCorner.CornerRadius = UDim.new(0, 8)
-	ButtonCorner.Parent = Button
+    local ButtonCorner = Instance.new("UICorner")
+    ButtonCorner.CornerRadius = UDim.new(0, 8)
+    ButtonCorner.Parent = Button
 
-	local ButtonText = Instance.new("TextLabel")
-	ButtonText.Size = UDim2.new(1, 0, 1, 0)
-	ButtonText.BackgroundTransparency = 1
-	ButtonText.Text = "复制" .. text
-	ButtonText.TextColor3 = Color3.fromRGB(255, 255, 255)
-	ButtonText.Font = Enum.Font.SourceSansBold
-	ButtonText.TextSize = 16
-	ButtonText.Parent = Button
+    local ButtonText = Instance.new("TextLabel")
+    ButtonText.Size = UDim2.new(1, 0, 1, 0)
+    ButtonText.BackgroundTransparency = 1
+    ButtonText.Text = "复制" .. text
+    ButtonText.TextColor3 = Color3.fromRGB(255, 255, 255)
+    ButtonText.Font = Enum.Font.SourceSansBold
+    ButtonText.TextSize = 16
+    ButtonText.Parent = Button
 
-	return Button
+    return Button
 end
 
 local CopyPositionButton = CreateCopyButton("位置信息", UDim2.new(0.05, 0, 0.3, 0), ButtonFrame)
 local CopyGameIDButton = CreateCopyButton("游戏ID", UDim2.new(0.05, 0, 0.65, 0), ButtonFrame)
 
 local function ShowNotification(message, isSuccess)
-	StarterGui:SetCore("SendNotification", {
-		Title = "复制工具",
-		Text = message,
-		Duration = 2,
-		Icon = isSuccess and "rbxassetid://10717640757" or "rbxassetid://10717641023"
-	})
+    StarterGui:SetCore("SendNotification", {
+        Title = "复制工具",
+        Text = message,
+        Duration = 2,
+        Icon = isSuccess and "rbxassetid://10717640757" or "rbxassetid://10717641023"
+    })
 end
 
 local isMinimized = false
 
 CopyPositionButton.MouseButton1Click:Connect(function()
-	local Character = LocalPlayer.Character
-	if not Character then
-		ShowNotification("角色未加载！", false)
-		return
-	end
-	local HumanoidRootPart = Character:FindFirstChild("HumanoidRootPart")
-	if not HumanoidRootPart then
-		ShowNotification("无法获取位置！", false)
-		return
-	end
-	local pos = HumanoidRootPart.Position
-	local positionText = string.format("X=%.8f,Y=%.8f,Z=%.8f", pos.X, pos.Y, pos.Z)
-	setclipboard(positionText)
-	ShowNotification("高精度位置已复制！", true)
+    local Character = LocalPlayer.Character
+    if not Character then
+        ShowNotification("角色未加载！", false)
+        return
+    end
+    local HumanoidRootPart = Character:FindFirstChild("HumanoidRootPart")
+    if not HumanoidRootPart then
+        ShowNotification("无法获取位置！", false)
+        return
+    end
+    local pos = HumanoidRootPart.Position
+    local positionText = string.format("X=%.8f,Y=%.8f,Z=%.8f", pos.X, pos.Y, pos.Z)
+    setclipboard(positionText)
+    ShowNotification("高精度位置已复制！", true)
 end)
 
 CopyGameIDButton.MouseButton1Click:Connect(function()
-	local placeId = tostring(game.PlaceId)
-	if placeId == "0" then
-		ShowNotification("无法获取游戏ID！", false)
-		return
-	end
-	setclipboard(placeId)
-	ShowNotification("游戏ID已复制！", true)
+    local placeId = tostring(game.PlaceId)
+    if placeId == "0" then
+        ShowNotification("无法获取游戏ID！", false)
+        return
+    end
+    setclipboard(placeId)
+    ShowNotification("游戏ID已复制！", true)
 end)
 
 CloseButton.MouseButton1Click:Connect(function()
-	ScreenGui:Destroy()
-	ShowNotification("UI已关闭！", true)
+    ScreenGui:Destroy()
+    ShowNotification("UI已关闭！", true)
 end)
 
 MinimizeButton.MouseButton1Click:Connect(function()
-	isMinimized = not isMinimized
-	if isMinimized then
-		CopyPositionButton.Visible = false
-		CopyGameIDButton.Visible = false
-		ButtonFrame.Size = UDim2.new(0, 120, 0, 30)
-		MinimizeButton.Text = "+"
-	else
-		CopyPositionButton.Visible = true
-		CopyGameIDButton.Visible = true
-		ButtonFrame.Size = UDim2.new(0, 300, 0, 140)
-		MinimizeButton.Text = "−"
-	end
+    isMinimized = not isMinimized
+    if isMinimized then
+        CopyPositionButton.Visible = false
+        CopyGameIDButton.Visible = false
+        ButtonFrame.Size = UDim2.new(0, 120, 0, 30)
+        MinimizeButton.Text = "+"
+    else
+        CopyPositionButton.Visible = true
+        CopyGameIDButton.Visible = true
+        ButtonFrame.Size = UDim2.new(0, 300, 0, 140)
+        MinimizeButton.Text = "−"
+    end
 end)
 
 UserInputService.InputBegan:Connect(function(input, gameProcessed)
-	if gameProcessed then return end
-	if input.KeyCode == Enum.KeyCode.F3 then
-		ButtonFrame.Visible = not ButtonFrame.Visible
-	end
+    if gameProcessed then return end
+    if input.KeyCode == Enum.KeyCode.F3 then
+        ButtonFrame.Visible = not ButtonFrame.Visible
+    end
 end)
