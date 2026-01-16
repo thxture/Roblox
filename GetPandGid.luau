@@ -123,7 +123,7 @@ CopyPositionButton.MouseButton1Click:Connect(function()
         return
     end
     local pos = HumanoidRootPart.Position
-    local positionText = string.format("X=%.8f,Y=%.8f,Z=%.8f", pos.X, pos.Y, pos.Z)
+    local positionText = string.format("%.8f,%.8f,%.8f", pos.X, pos.Y, pos.Z)
     setclipboard(positionText)
     ShowNotification("高精度位置已复制！", true)
 end)
