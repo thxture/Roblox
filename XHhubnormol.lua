@@ -117,12 +117,6 @@ MainTab:Paragraph({
         }
     }
 })
-
-MainTab:Paragraph({
-    Title = "支持的服务器:",
-    Desc = "巨人模拟器",
-})
-
 local Tab = Window:Tab({
     Title = "通用",
     Icon = "drama",
